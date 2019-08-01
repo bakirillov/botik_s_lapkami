@@ -9,8 +9,6 @@ from pymystem3 import Mystem
 from flask import Flask, request
 
 # Initializations
-with open("config.json", "r") as ih:
-    config = json.load(ih)
 allowed = str(os.environ.get("ALLOWED_USERS", "nobody")).split(",")
 TOKEN = str(os.environ.get("BOT_TOKEN", "none"))
 WHEREAMI = str(os.environ.get("BOT_ENVIRONMENT", "LOCAL"))
