@@ -1,0 +1,5 @@
+numpy
+flask
+vedis
+pymystem3
+pyTelegramBotApi
