@@ -79,6 +79,7 @@ def webhook():
     bot.set_webhook(url=LINK+TOKEN)
     return("!", 200)
 
+print(WHEREAMI)
 if WHEREAMI == "HEROKU":
     server.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
 else:
