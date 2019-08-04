@@ -19,6 +19,18 @@ bot = telebot.TeleBot(TOKEN)
 mstm = Mystem()
 server = Flask(__name__)
 
+
+@bot.message_handler(commands=["promote"])
+def grant_a_lifetime_nobility(message):
+    user_name = message
+    print(message)
+   # bot.reply_to(message, "Высочайшим позволением участнику "+user_name+" даровано личное дворянство.")
+
+@bot.message_handler(commands=["demote"])
+def revoke_a_lifetime_nobility(message):
+    user_name = message
+    bot.reply_to(message, "Высочайшим указом "+user_name+" лишается личного дворянства.")
+    
 def authorised(message):
     """"Check if user is authorised"""
     uid = str(message.from_user.id)
