@@ -24,37 +24,45 @@ NORMAL_USERS = {
 
 @bot.message_handler(commands=["promote"])
 def grant_a_lifetime_nobility(message):
-    user = message.reply_to_message.from_user
-    bot.promote_chat_member(
-        message.chat.id, user.id, 
-        can_change_info=False,
-        can_post_messages=False,
-        can_edit_messages=False,
-        can_delete_messages=True,
-        can_invite_users=True,
-        can_restrict_members=True,
-        can_pin_messages=True,
-        can_promote_members=False
-    )
-    bot.reply_to(
-        message, "Высочайшим позволением участнику "+user.username+" даровано личное дворянство."
-    )
+    print(message.from_user.id)
+    if message.from_user.id == 118365314:
+        user = message.reply_to_message.from_user
+        bot.promote_chat_member(
+            message.chat.id, user.id, 
+            can_change_info=False,
+            can_post_messages=False,
+            can_edit_messages=False,
+            can_delete_messages=True,
+            can_invite_users=True,
+            can_restrict_members=True,
+            can_pin_messages=True,
+            can_promote_members=False
+        )
+        bot.reply_to(
+            message, "Высочайшим позволением участнику "+user.username+" даровано личное дворянство."
+        )
+    else:
+        bot.reply_to(message, "Только котик с лапками может даровать личное дворянство и лишать его")
 
 @bot.message_handler(commands=["demote"])
 def revoke_a_lifetime_nobility(message):
-    user = message.reply_to_message.from_user
-    bot.promote_chat_member(
-        message.chat.id, user.id, 
-        can_change_info=False,
-        can_post_messages=False,
-        can_edit_messages=False,
-        can_delete_messages=False,
-        can_invite_users=False,
-        can_restrict_members=False,
-        can_pin_messages=False,
-        can_promote_members=False
-    )
-    bot.reply_to(message, "Высочайшим указом "+user.username+" лишается личного дворянства.")
+    print(message.from_user.id)
+    if message.from_user.id == 118365314:
+        user = message.reply_to_message.from_user
+        bot.promote_chat_member(
+            message.chat.id, user.id,
+            can_change_info=False,
+            can_post_messages=False,
+            can_edit_messages=False,
+            can_delete_messages=False,
+            can_invite_users=False,
+            can_restrict_members=False,
+            can_pin_messages=False,
+            can_promote_members=False
+        )
+        bot.reply_to(message, "Высочайшим указом "+user.username+" лишается личного дворянства.")
+    else:
+        bot.reply_to(message, "Только котик с лапками может даровать личное дворянство и лишать его")
     
 def authorised(message):
     """"Check if user is authorised"""
