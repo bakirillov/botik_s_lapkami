@@ -60,12 +60,17 @@ def perform_text_operation(message):
             if len(not_empty) > 0:
                 chosen = np.random.choice(np.arange(len(not_empty)))
                 word = not_empty[chosen]["analysis"][0]["lex"]
-                gender = re.search("(муж|жен|сред)", not_empty[chosen]["analysis"][0]["gr"])[0]
-                gendered = genders[gender]
-                bot.reply_to(
-                    message, 
-                    "Напоминаю, что "+word+" "+gendered+" Собором для захвата и удержания власти. \n\n Ваш NRx-котик."
-                )
+                try:
+                    gender = re.search("(муж|жен|сред)", not_empty[chosen]["analysis"][0]["gr"])[0]
+                except:
+                    gender = None
+                finally:
+                    if gender:
+                        gendered = genders[gender]
+                        bot.reply_to(
+                            message, 
+                            "Напоминаю, что "+word+" "+gendered+" Собором для захвата и удержания власти. \n\n Ваш NRx-котик."
+                        )
     except Exception as e:
         bot.reply_to(message, str(e))
         
