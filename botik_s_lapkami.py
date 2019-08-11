@@ -98,24 +98,39 @@ def perform_text_operation(message):
         if is_change_title:
             bot.send_chat_action(message.chat.id, "typing")
             bot.set_chat_title(message.chat.id, is_change_title[0])
+        if "ройзман" in str(message.text).lower():
+            bot.send_chat_action(message.chat.id, "typing")
+            possible_answer = [
+                "НАХУЙ РОЙЗМАНА", "Место Ройзмана на бутылке", "Мы люстрируем Ройзмана",
+                "Город против наркотиков = пчёлы против мёда, а Ройзман - наркобарон",
+                "Помни Илью Букатина, помни Сергея Костяна."
+            ]
+            bot.reply_to(
+                message, possible_answer[np.random.choice(np.arange(len(possible_answer)))]
+            )
         if np.random.choice([True, False], p=[0.05, 0.95]):
             bot.send_chat_action(message.chat.id, "typing")
-            analysis = mstm.analyze(message.text)
-            not_empty = list(filter(filter_mystem, analysis))
-            if len(not_empty) > 0:
-                chosen = np.random.choice(np.arange(len(not_empty)))
-                word = not_empty[chosen]["analysis"][0]["lex"]
-                try:
-                    gender = re.search("(муж|жен|сред)", not_empty[chosen]["analysis"][0]["gr"])[0]
-                except:
-                    gender = None
-                finally:
-                    if gender:
-                        gendered = genders[gender]
-                        bot.reply_to(
-                            message, 
-                            "Напоминаю, что "+word+" "+gendered+" Собором для захвата и удержания власти. \n\n Ваш NRx-котик."
-                        )
+            if not re.search("[a-zA-Z]+", message.text):
+                analysis = mstm.analyze(message.text)
+                not_empty = list(filter(filter_mystem, analysis))
+                if len(not_empty) > 0:
+                    chosen = np.random.choice(np.arange(len(not_empty)))
+                    word = not_empty[chosen]["analysis"][0]["lex"]
+                    try:
+                        gender = re.search("(муж|жен|сред)", not_empty[chosen]["analysis"][0]["gr"])[0]
+                    except:
+                        gender = None
+                    finally:
+                        if gender:
+                            gendered = genders[gender]
+                            bot.reply_to(
+                                message, 
+                                "Напоминаю, что "+word+" "+gendered+" Собором для захвата и удержания власти. \n\n Ваш NRx-котик."
+                            )
+            else:
+                bot.reply_to(
+                    message, "Уберите эти басурманские прогрессивные закорючки, не по нраву!"
+                )
     except Exception as e:
         bot.reply_to(message, str(e))
         
