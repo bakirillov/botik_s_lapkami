@@ -39,10 +39,10 @@ def grant_a_lifetime_nobility(message):
             can_promote_members=False
         )
         bot.reply_to(
-            message, "Высочайшим позволением участнику "+user.username+" даровано личное дворянство."
+            message, "Высочайшимъ позволеніемъ участнику"+user.username+" даровано личное дворянство, мряфъ."
         )
     else:
-        bot.reply_to(message, "Только котик с лапками может даровать личное дворянство и лишать его")
+        bot.reply_to(message, "Только котикъ съ лапками можетъ даровать личное дворянство и лишать его, муръ.")
 
 @bot.message_handler(commands=["demote"])
 def revoke_a_lifetime_nobility(message):
@@ -60,9 +60,9 @@ def revoke_a_lifetime_nobility(message):
             can_pin_messages=False,
             can_promote_members=False
         )
-        bot.reply_to(message, "Высочайшим указом "+user.username+" лишается личного дворянства.")
+        bot.reply_to(message, "Высочайшимъ указомъ "+user.username+"лишается личнаго дворянства.")
     else:
-        bot.reply_to(message, "Только котик с лапками может даровать личное дворянство и лишать его")
+        bot.reply_to(message, "Только котикъ съ лапками можетъ даровать личное дворянство и лишать его, муръ.")
     
 def authorised(message):
     """"Check if user is authorised"""
@@ -80,16 +80,16 @@ def filter_mystem(x):
 
 @bot.message_handler(commands=["start"])
 def greet_and_identify(message):
-    g = "Я котик-ботик, у меня лапки-лапки!"
+    g = "Я котикъ-ботикъ, у меня лапки-лапки!"
     uid, a = authorised(message)
     if not a:
-        g = "Вы котик? Предъявите лапки!"
+        g = "Вы котикъ? Предъявите лапки!"
     bot.reply_to(message, g)
     
 @bot.message_handler(content_types=["text"])
 def perform_text_operation(message):
     genders = {
-        "муж": "был придуман",
+        "муж": "былъ придуманъ",
         "жен": "была придумана",
         "сред": "было придумано",
     }
@@ -101,9 +101,9 @@ def perform_text_operation(message):
         if "ройзман" in str(message.text).lower():
             bot.send_chat_action(message.chat.id, "typing")
             possible_answer = [
-                "НАХУЙ РОЙЗМАНА", "Место Ройзмана на бутылке", "Ройзман будет люстрирован",
-                "Город против наркотиков = пчёлы против мёда, а Ройзман - наркобарон",
-                "Помни Илью Букатина, помни Сергея Костяна."
+                "НАХУЙ РОЙЗМАНА", "Мѣсто Ройзмана на бутылкѣ", "Ройзманъ будетъ люстрированъ",
+                "Городъ противъ наркотиковъ = пчелы противъ меда, а Ройзманъ - наркобаронъ",
+                "Помни Илью Букатина, помни Сергѣя Костяна."
             ]
             bot.reply_to(
                 message, possible_answer[np.random.choice(np.arange(len(possible_answer)))]
@@ -125,11 +125,11 @@ def perform_text_operation(message):
                             gendered = genders[gender]
                             bot.reply_to(
                                 message, 
-                                "Напоминаю, что "+word+" "+gendered+" Собором для захвата и удержания власти. \n\n Ваш NRx-котик."
+                                "Мяу! Напоминаю, что "+word+" "+gendered+" Соборомъ для захвата и удержанія власти. \n\n Вашъ NRx-котикъ." 
                             )
             else:
                 bot.reply_to(
-                    message, "Уберите эти басурманские прогрессивные закорючки, не по нраву!"
+                    message, "Уберите эти басурманскіе прогрессивные закорючки, не по нраву! Мяу!"
                 )
     except Exception as e:
         bot.reply_to(message, str(e))
