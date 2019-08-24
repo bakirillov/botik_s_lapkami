@@ -38,7 +38,7 @@ def add_to_mustreads(message):
     bot.send_chat_action(message.chat.id, "typing")
     admins = [a.user.id for a in bot.get_chat_administrators(message.chat.id)]
     if message.from_user.id in admins:
-        current = MUSTREAD_GIST.as_dict()["content"].split("\n\n")
+        current = MUSTREAD_GIST.as_dict()["files"]['PawsMustReads.txt']["content"].split("\n\n")
         addition = str(message.text).replace("\n\n", "\n")
         new = "\n\n".join(current+[addition])
         added = MUSTREAD_GIST.edit(
