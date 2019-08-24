@@ -6,6 +6,7 @@ import requests
 import numpy as np
 import pandas as pd
 from vedis import Vedis
+from github3 import login
 from pymystem3 import Mystem
 from flask import Flask, request
 
@@ -15,19 +16,47 @@ allowed = str(os.environ.get("ALLOWED_USERS", "nobody")).split(",")
 TOKEN = str(os.environ.get("BOT_TOKEN", "none"))
 WHEREAMI = str(os.environ.get("BOT_ENVIRONMENT", "LOCAL"))
 LINK = str(os.environ.get("BOT_LINK", "Ololo"))
+GIT_LOGIN = str(os.environ.get("GIT_LOGIN", "Ololo"))
+GIT_PASS = str(os.environ.get("GIT_PASS", "Ololo"))
+GIST_LINK = str(os.environ.get("GIST_LINK", "Ololo"))
+MUSTREAD_GIST = gh.gist(GIST_LINK.split("/")[-1])
 bot = telebot.TeleBot(TOKEN)
 mstm = Mystem()
 server = Flask(__name__)
-mustreads = pd.read_csv("mustreads.csv", sep="----", engine="python")
+
 
 @bot.message_handler(commands=["listmustreads"])
 def list_mustreads(message):
     bot.send_chat_action(message.chat.id, "typing")
-    for a in np.arange(mustreads.values.shape[0]):
-        bot.send_message(
-            message.chat.id, mustreads.iloc[a]["Название"]+"\n"+mustreads.iloc[a]["Ссылка"]
-        )
+    bot.reply_to(
+        message, "Списокъ рекомендованной литературы Лапкочата Вы можете найти по ссылкѣ "+GIST_LINK
+    )
 
+@bot.message_handler(commands=["tomustreads"])
+def add_to_mustreads(message):
+    bot.send_chat_action(message.chat.id, "typing")
+    admins = [a.id for a in bot.get_chat_administrators(message.chat.id)]
+    if message.from_user.id in admins:
+        current = MUSTREAD_GIST.as_dict()["content"].split("\n\n")
+        addition = str(message.text).replace("\n\n", "\n")
+        new = "\n\n".join(current+[addition])
+        added = MUSTREAD_GIST.edit(
+            description="New mustread", files = {"PawsMustReads.txt": {"content": new}}
+        )
+        if added:
+            bot.reply_to(
+                message, "Новый мастридъ успѣшно добавленъ, мя"
+            )
+        else:
+            bot.reply_to(
+                message, "Съ добавленіемъ мастрида произошло фіаско, уфъ"
+            )
+    else:
+        bot.reply_to(
+            message, "Только дворяне имѣютъ право добавлять пункты въ списокъ мастридовъ"
+        )
+    
+    
 @bot.message_handler(commands=["roll"])
 def roll_a_dice(message):
     bot.reply_to(

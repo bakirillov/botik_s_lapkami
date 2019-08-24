@@ -3,4 +3,5 @@ flask
 vedis
 pandas
 pymystem3
+github3.py
 pyTelegramBotApi
