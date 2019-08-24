@@ -36,7 +36,7 @@ def list_mustreads(message):
 @bot.message_handler(commands=["tomustreads"])
 def add_to_mustreads(message):
     bot.send_chat_action(message.chat.id, "typing")
-    admins = [a.id for a in bot.get_chat_administrators(message.chat.id)]
+    admins = [a.user.id for a in bot.get_chat_administrators(message.chat.id)]
     if message.from_user.id in admins:
         current = MUSTREAD_GIST.as_dict()["content"].split("\n\n")
         addition = str(message.text).replace("\n\n", "\n")
