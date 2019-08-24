@@ -1,5 +1,6 @@
 numpy
 flask
 vedis
+pandas
 pymystem3
 pyTelegramBotApi
