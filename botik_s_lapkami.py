@@ -19,7 +19,7 @@ server = Flask(__name__)
 
 
 @bot.message_handler(commands=["roll"])
-def roll_a_dice():
+def roll_a_dice(message):
     bot.reply_to(
         message, str(np.random.choice(np.arange(1,7)))
     )
