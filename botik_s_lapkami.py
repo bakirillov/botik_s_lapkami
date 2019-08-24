@@ -19,7 +19,6 @@ LINK = str(os.environ.get("BOT_LINK", "Ololo"))
 GIT_LOGIN = str(os.environ.get("GIT_LOGIN", "Ololo"))
 GIT_PASS = str(os.environ.get("GIT_PASS", "Ololo"))
 GIST_LINK = str(os.environ.get("GIST_LINK", "Ololo"))
-gh = login(GIT_LOGIN, GIT_PASS)
 bot = telebot.TeleBot(TOKEN)
 mstm = Mystem()
 server = Flask(__name__)
@@ -37,6 +36,7 @@ def add_to_mustreads(message):
     bot.send_chat_action(message.chat.id, "typing")
     admins = [a.user.id for a in bot.get_chat_administrators(message.chat.id)]
     if message.from_user.id in admins:
+        gh = login(GIT_LOGIN, GIT_PASS)
         MUSTREAD_GIST = gh.gist(GIST_LINK.split("/")[-1])
         current = MUSTREAD_GIST.as_dict()["files"]['PawsMustReads.txt']["content"].split("\n\n")
         addition = str(message.reply_to_message.text).replace("\n\n", "\n")
