@@ -13,14 +13,16 @@ allowed = str(os.environ.get("ALLOWED_USERS", "nobody")).split(",")
 TOKEN = str(os.environ.get("BOT_TOKEN", "none"))
 WHEREAMI = str(os.environ.get("BOT_ENVIRONMENT", "LOCAL"))
 LINK = str(os.environ.get("BOT_LINK", "Ololo"))
-#print(LINK)
-#print(LINK+TOKEN)
 bot = telebot.TeleBot(TOKEN)
 mstm = Mystem()
 server = Flask(__name__)
 
-NORMAL_USERS = {
-}
+
+@bot.message_handler(commands=["roll"])
+def roll_a_dice():
+    bot.reply_to(
+        message, str(np.random.choice(np.arange(1,7)))
+    )
 
 @bot.message_handler(commands=["promote"])
 def grant_a_lifetime_nobility(message):
@@ -111,25 +113,29 @@ def perform_text_operation(message):
         if np.random.choice([True, False], p=[0.05, 0.95]):
             bot.send_chat_action(message.chat.id, "typing")
             if not re.search("[a-zA-Z]+", message.text):
-                analysis = mstm.analyze(message.text)
-                not_empty = list(filter(filter_mystem, analysis))
-                if len(not_empty) > 0:
-                    chosen = np.random.choice(np.arange(len(not_empty)))
-                    word = not_empty[chosen]["analysis"][0]["lex"]
-                    try:
-                        gender = re.search("(муж|жен|сред)", not_empty[chosen]["analysis"][0]["gr"])[0]
-                    except:
-                        gender = None
-                    finally:
-                        if gender:
-                            gendered = genders[gender]
-                            bot.reply_to(
-                                message, 
-                                "Мяу! Напоминаю, что "+word+" "+gendered+" Соборомъ для захвата и удержанія власти. \n\n Вашъ NRx-котикъ." 
-                            )
+                try:
+                    analysis = mstm.analyze(message.text)
+                    not_empty = list(filter(filter_mystem, analysis))
+                except:
+                    pass
+                else:
+                    if len(not_empty) > 0:
+                        chosen = np.random.choice(np.arange(len(not_empty)))
+                        word = not_empty[chosen]["analysis"][0]["lex"]
+                        try:
+                            gender = re.search("(муж|жен|сред)", not_empty[chosen]["analysis"][0]["gr"])[0]
+                        except:
+                            gender = None
+                        finally:
+                            if gender:
+                                gendered = genders[gender]
+                                bot.reply_to(
+                                    message, 
+                                        "Мяу! Напоминаю, что "+word+" "+gendered+" Соборомъ для захвата и удержанія власти. \n\n Вашъ NRx-котикъ." 
+                                )
             else:
                 msgs = [
-                    "Если не хочешь остаться въ тупикѣ, говори со мной только на русскомъ языкѣ, мяу!",
+                    "Если не хочешь оставаться въ тупикѣ, говори со мной только на русскомъ языкѣ, мяу!",
                     "Уберите эти басурманскіе прогрессивные закорючки, не по нраву! Мяу!"
                 ]
                 bot.reply_to(
@@ -148,6 +154,7 @@ def webhook():
     bot.remove_webhook()
     bot.set_webhook(url=LINK+TOKEN)
     return("!", 200)
+
 
 print(WHEREAMI)
 if WHEREAMI == "HEROKU":
