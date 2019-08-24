@@ -42,7 +42,7 @@ def add_to_mustreads(message):
         addition = str(message.reply_to_message.text).replace("\n\n", "\n")
         new = "\n\n".join(current+[addition])
         added = MUSTREAD_GIST.edit(
-            description="New mustread", files = {"PawsMustReads.txt": {"content": new}}
+            description="Lapkochat Mustreads list", files = {"PawsMustReads.txt": {"content": new}}
         )
         if added:
             bot.reply_to(
