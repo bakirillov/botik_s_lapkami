@@ -4,6 +4,7 @@ import json
 import telebot
 import requests
 import numpy as np
+import pandas as pd
 from vedis import Vedis
 from pymystem3 import Mystem
 from flask import Flask, request
