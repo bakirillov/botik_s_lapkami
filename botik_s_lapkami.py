@@ -100,6 +100,11 @@ def perform_text_operation(message):
         if is_change_title:
             bot.send_chat_action(message.chat.id, "typing")
             bot.set_chat_title(message.chat.id, is_change_title[0])
+        if "бляд" in str(message.text).lower():
+            bot.send_chat_action(message.chat.id, "typing")
+            bot.reply_to(
+                message, "Россія безъ блядства и содоміи!"
+            )
         if "ройзман" in str(message.text).lower():
             bot.send_chat_action(message.chat.id, "typing")
             possible_answer = [
