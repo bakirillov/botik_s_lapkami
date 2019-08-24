@@ -8,6 +8,7 @@ from vedis import Vedis
 from pymystem3 import Mystem
 from flask import Flask, request
 
+
 # Initializations
 allowed = str(os.environ.get("ALLOWED_USERS", "nobody")).split(",")
 TOKEN = str(os.environ.get("BOT_TOKEN", "none"))
@@ -16,7 +17,15 @@ LINK = str(os.environ.get("BOT_LINK", "Ololo"))
 bot = telebot.TeleBot(TOKEN)
 mstm = Mystem()
 server = Flask(__name__)
+mustreads = pd.read_csv("mustreads.csv", sep="----", engine="python")
 
+@bot.message_handler(commands=["listmustreads"])
+def list_mustreads(message):
+    bot.send_chat_action(message.chat.id, "typing")
+    for a in np.arange(mustreads.values.shape[0]):
+        bot.send_message(
+            message.chat.id, mustreads.iloc[a]["Название"]+"\n"+mustreads.iloc[a]["Ссылка"]
+        )
 
 @bot.message_handler(commands=["roll"])
 def roll_a_dice(message):
@@ -26,7 +35,6 @@ def roll_a_dice(message):
 
 @bot.message_handler(commands=["promote"])
 def grant_a_lifetime_nobility(message):
-    print(message.from_user.id)
     if message.from_user.id == 118365314:
         user = message.reply_to_message.from_user
         bot.promote_chat_member(
@@ -48,7 +56,6 @@ def grant_a_lifetime_nobility(message):
 
 @bot.message_handler(commands=["demote"])
 def revoke_a_lifetime_nobility(message):
-    print(message.from_user.id)
     if message.from_user.id == 118365314:
         user = message.reply_to_message.from_user
         bot.promote_chat_member(
