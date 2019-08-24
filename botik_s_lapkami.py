@@ -36,22 +36,26 @@ def add_to_mustreads(message):
     bot.send_chat_action(message.chat.id, "typing")
     admins = [a.user.id for a in bot.get_chat_administrators(message.chat.id)]
     if message.from_user.id in admins:
-        gh = login(GIT_LOGIN, GIT_PASS)
-        MUSTREAD_GIST = gh.gist(GIST_LINK.split("/")[-1])
-        current = MUSTREAD_GIST.as_dict()["files"]['PawsMustReads.txt']["content"].split("\n\n")
-        addition = str(message.reply_to_message.text).replace("\n\n", "\n")
-        new = "\n\n".join(current+[addition])
-        added = MUSTREAD_GIST.edit(
-            description="Lapkochat Mustreads list", files = {"PawsMustReads.txt": {"content": new}}
-        )
-        if added:
-            bot.reply_to(
-                message, "Новый мастридъ успѣшно добавленъ, мя"
-            )
+        try:
+            gh = login(GIT_LOGIN, GIT_PASS)
+            MUSTREAD_GIST = gh.gist(GIST_LINK.split("/")[-1])
+            current = MUSTREAD_GIST.as_dict()["files"]['PawsMustReads.txt']["content"].split("\n\n")
+        except Exception as e:
+            bot.reply_to(message, str(e))
         else:
-            bot.reply_to(
-                message, "Съ добавленіемъ мастрида произошло фіаско, уфъ"
+            addition = str(message.reply_to_message.text).replace("\n\n", "\n")
+            new = "\n\n".join(current+[addition])
+            added = MUSTREAD_GIST.edit(
+                description="Lapkochat Mustreads list", files = {"PawsMustReads.txt": {"content": new}}
             )
+            if added:
+                bot.reply_to(
+                    message, "Новый мастридъ успѣшно добавленъ, мя"
+                )
+            else:
+                bot.reply_to(
+                    message, "Съ добавленіемъ мастрида произошло фіаско, уфъ"
+                )
     else:
         bot.reply_to(
             message, "Только дворяне имѣютъ право добавлять пункты въ списокъ мастридовъ"
