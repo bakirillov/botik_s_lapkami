@@ -165,6 +165,11 @@ def perform_text_operation(message):
             bot.reply_to(
                 message, possible_answer[np.random.choice(np.arange(len(possible_answer)))]
             )
+        if "чечня" in str(message.text).lower() and "круто" in str(message.text).lower():
+            bot.send_chat_action(message.chat.id, "typing")
+            bot.reply_to(
+                message, CHECHNYA_KRUTO
+            )
         if np.random.choice([True, False], p=[0.05, 0.95]):
             bot.send_chat_action(message.chat.id, "typing")
             if not re.search("[a-zA-Z]+", message.text):
