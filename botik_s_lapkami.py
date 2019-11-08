@@ -170,6 +170,11 @@ def perform_text_operation(message):
             bot.reply_to(
                 message, CHECHNYA_KRUTO
             )
+        if "казахстан" in str(message.text).lower():
+            bot.send_chat_action(message.chat.id, "typing")
+            bot.reply_to(
+                message, """Напомнинаю, что правильно говорить "Сырдарьинская и Семиреченская области Туркестанского генерал-губернаторства, Уральская и Тургайская области Оренбургской губернии, Акмолинская и Семипалатинская области Западно-Сибирского генерал-губернаторства", муррррръ мяфъ мяфъ."""
+            )
         if np.random.choice([True, False], p=[0.05, 0.95]):
             bot.send_chat_action(message.chat.id, "typing")
             if not re.search("[a-zA-Z]+", message.text):
