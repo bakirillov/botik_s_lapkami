@@ -171,7 +171,7 @@ def perform_text_operation(message):
                 message, CHECHNYA_KRUTO
             )
         if "казахстан" in str(message.text).lower():
-            if np.random.choice([True, False], p=[0.05, 0.95]):
+            if np.random.choice([True, False], p=[0.3, 0.7]):
                 bot.send_chat_action(message.chat.id, "typing")
                 bot.reply_to(
                     message, """Мяу! Напоминаю, что правильно говорить "Сырдарьинская и Семиреченская области Туркестанскаго генералъ-губернаторства, Уральская и Тургайская области Оренбургской губерніи, Акмолинская и Семипалатинская области Западно-Сибирскаго генералъ-губернаторства".
