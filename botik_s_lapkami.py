@@ -19,6 +19,7 @@ LINK = str(os.environ.get("BOT_LINK", "Ololo"))
 GIT_LOGIN = str(os.environ.get("GIT_LOGIN", "Ololo"))
 GIT_PASS = str(os.environ.get("GIT_PASS", "Ololo"))
 GIST_LINK = str(os.environ.get("GIST_LINK", "Ololo"))
+CHECHNYA_KRUTO = str(os.environ.get("CHECHNYA_KRUTO", "Мряфъ?"))
 bot = telebot.TeleBot(TOKEN)
 mstm = Mystem()
 server = Flask(__name__)
@@ -66,6 +67,13 @@ def add_to_mustreads(message):
 def roll_a_dice(message):
     bot.reply_to(
         message, str(np.random.choice(np.arange(1,7)))
+    )
+    
+    
+@bot.message_handler(commands=["chechnya_kruto"])
+def chechnya(message):
+    bot.reply_to(
+        message, CHECHNYA_KRUTO
     )
 
 @bot.message_handler(commands=["promote"])
