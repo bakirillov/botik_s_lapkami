@@ -37,9 +37,9 @@ def add_to_mustreads(message):
     bot.send_chat_action(message.chat.id, "typing")
     try:
         bot.sendMessage(118365314, str(message.reply_to_message.text))
-    except:
+    except Exception as e:
         bot.reply_to(
-            message, "Съ добавленіемъ мастрида произошло фіаско, уфъ"
+            message, "Съ добавленіемъ мастрида произошло фіаско, уфъ: "+str(e)
         )
     else:
         bot.reply_to(
