@@ -35,40 +35,22 @@ def list_mustreads(message):
 @bot.message_handler(commands=["tomustreads"])
 def add_to_mustreads(message):
     bot.send_chat_action(message.chat.id, "typing")
-    admins = [a.user.id for a in bot.get_chat_administrators(message.chat.id)]
-    if message.from_user.id in admins:
-        try:
-            gh = login(GIT_LOGIN, GIT_PASS)
-            MUSTREAD_GIST = gh.gist(GIST_LINK.split("/")[-1])
-            current = MUSTREAD_GIST.as_dict()["files"]['PawsMustReads.txt']["content"].split("\n\n")
-        except Exception as e:
-            bot.reply_to(message, str(e))
-        else:
-            addition = str(message.reply_to_message.text).replace("\n\n", "\n")
-            new = "\n\n".join(current+[addition])
-            added = MUSTREAD_GIST.edit(
-                description="Lapkochat Mustreads list", files = {"PawsMustReads.txt": {"content": new}}
-            )
-            if added:
-                bot.reply_to(
-                    message, "Новый мастридъ успѣшно добавленъ, мя"
-                )
-            else:
-                bot.reply_to(
-                    message, "Съ добавленіемъ мастрида произошло фіаско, уфъ"
-                )
+    try:
+        bot.sendMessage(118365314, str(message.reply_to_message.text))
+    except:
+        bot.reply_to(
+            message, "Съ добавленіемъ мастрида произошло фіаско, уфъ"
+        )
     else:
         bot.reply_to(
-            message, "Только дворяне имѣютъ право добавлять пункты въ списокъ мастридовъ"
+            message, "Новый мастридъ отправленъ на разсмотрѣніе, мррръ"
         )
-    
     
 @bot.message_handler(commands=["roll"])
 def roll_a_dice(message):
     bot.reply_to(
         message, str(np.random.choice(np.arange(1,7)))
     )
-    
     
 @bot.message_handler(commands=["chechnya_kruto"])
 def chechnya(message):
