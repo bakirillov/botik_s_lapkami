@@ -51,12 +51,6 @@ def roll_a_dice(message):
     bot.reply_to(
         message, str(np.random.choice(np.arange(1,7)))
     )
-    
-@bot.message_handler(commands=["chechnya_kruto"])
-def chechnya(message):
-    bot.reply_to(
-        message, CHECHNYA_KRUTO
-    )
 
 @bot.message_handler(commands=["promote"])
 def grant_a_lifetime_nobility(message):
@@ -119,6 +113,7 @@ def greet_and_identify(message):
     if not a:
         g = "Вы котикъ? Предъявите лапки!"
     bot.reply_to(message, g)
+    bot.reply_to(message, str(message.chat.id))
     
 @bot.message_handler(content_types=["text"])
 def perform_text_operation(message):
