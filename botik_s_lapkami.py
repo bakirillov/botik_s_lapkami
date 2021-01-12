@@ -132,6 +132,11 @@ def perform_text_operation(message):
             bot.reply_to(
                 message, "Рина, сама соси!"
             )
+        if "Ні" in str(message.text).lower():
+            bot.send_chat_action(message.chat.id, "typing")
+            bot.reply_to(
+                message, "Hello"
+            )
         if "бляд" in str(message.text).lower():
             bot.send_chat_action(message.chat.id, "typing")
             bot.reply_to(
