@@ -127,6 +127,11 @@ def perform_text_operation(message):
         if is_change_title:
             bot.send_chat_action(message.chat.id, "typing")
             bot.set_chat_title(message.chat.id, is_change_title[0])
+        if "пососи" in str(message.text).lower():
+            bot.send_chat_action(message.chat.id, "typing")
+            bot.reply_to(
+                message, "Рина, сама соси!"
+            )
         if "бляд" in str(message.text).lower():
             bot.send_chat_action(message.chat.id, "typing")
             bot.reply_to(
@@ -156,6 +161,11 @@ def perform_text_operation(message):
  Вашъ имперскій котикъ. 
 """
                 )
+        if np.random.choice([True, False], p=[0.005, 0.995]):
+            bot.send_chat_action(message.chat.id, "typing")
+            bot.reply_to(
+                message, "пососи"
+            )
         if np.random.choice([True, False], p=[0.05, 0.95]):
             bot.send_chat_action(message.chat.id, "typing")
             if not re.search("[a-zA-Z]+", message.text):
