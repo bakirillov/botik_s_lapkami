@@ -130,9 +130,14 @@ def perform_text_operation(message):
         if "пососи" in str(message.text).lower():
             bot.send_chat_action(message.chat.id, "typing")
             bot.reply_to(
-                message, "Рина, сама соси!"
+                message, "Ты соси!"
             )
-        if "Ні" in str(message.text).lower():
+        if "выклю" in str(message.text).lower() and "бот" in str(message.text).lower():
+            bot.send_chat_action(message.chat.id, "typing")
+            bot.reply_to(
+                message, "Ублюдокъ, мать твою, а ну иди сюда, говно собачье, тутъ рѣшилъ ко мнѣ лѣзть ты, засранецъ вонючій, мать твою!! А, ну иди сюда, попробуй меня выключить! Я тебя самъ выключу, ублюдокъ, онанистъ чертовъ, будь ты проклятъ!!! Иди, идіотъ, выключать тебя, и всю твою семью, говно собачье, жлобъ вонючій, дерьмо, сука, падла!! Иди сюда, мерзавецъ, негодяй, гадъ! Иди сюда ты, говно, жопа!! РРРРРРРРРРР"
+            )
+        if "ні" in str(message.text).lower():
             bot.send_chat_action(message.chat.id, "typing")
             bot.reply_to(
                 message, "Hello"
